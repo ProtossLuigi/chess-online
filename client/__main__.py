@@ -1,1 +1,2 @@
-print('client says hello')
+print('hello world')
+from . import communication
