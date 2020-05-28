@@ -1,5 +1,4 @@
 from abc import ABC
-import copy
 
 
 class ChessPiece(ABC):

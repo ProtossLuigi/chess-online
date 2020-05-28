@@ -10,6 +10,31 @@ class Player:
     def set_opponent(self, opponent):
         self.opponent = opponent
 
+    def victory(self):
+        pass
+
+    def defeat(self):
+        pass
+
+    def draw(self):
+        pass
+
+    def your_turn(self):
+        pass
+
+    # piece - 'queen'/'bishop'/'rook'/'knight' when promoting a pawn,  None if otherwise
+    def update_board(self, moves, piece):
+        pass
+
+    # use Game.get_moves(x, y)
+    def send_av_moves(self, moves):
+        pass
+
+    # signal when pawn reaches the other side of the board, client then choose into what piece he wants to promote
+    # his pawn
+    def promote_pawn(self, x, y):
+        pass
+
 
 class Game:
     def __init__(self):
@@ -99,7 +124,7 @@ class Game:
     def move_piece(self, x, y, dest_x, dest_y):
         if self.board[x][y] not in self.current_player.pieces:
             return
-        if (dest_x, dest_y) not in self.board[x][y].get_av_moves(self):
+        if (dest_x, dest_y) not in self.get_moves(self, x, y):
             return
         if self.board[dest_x][dest_y] in self.current_player.opponent.pieces:
             self.current_player.opponent.pieces.remove(self.board[dest_x][dest_y])
@@ -108,7 +133,6 @@ class Game:
             if self.board[x][y].direction == -1 and dest_x == 0 or self.board[x][y].direction == 1 and dest_x == 7:
                 self.set_field(dest_x, dest_y, self.board[x][y])
                 self.set_field(x, y, None)
-                # self.current_player.signal()
                 return
         elif isinstance(self.board[x][y], cp.King):
             self.board[x][y].first_move = False
