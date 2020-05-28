@@ -10,6 +10,10 @@ def connect(addr, port):
     s.send(b'client says hello')
 
 
+def join(bot):
+    pass
+
+
 def check_av_moves(piece):
     pass
 
