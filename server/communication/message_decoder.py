@@ -1,7 +1,7 @@
 import json
 
 
-def decode(message):
+def decode(rec_player, message):
     message = json.loads(message)
     if message[0] == 'chk_sqrs':
         pass
