@@ -84,12 +84,18 @@ class Game:
         self.black_player.set_opponent(self.white_player)
         self.current_player = self.white_player
 
+        self.black_player.pieces.append(self.board[0][4])
         for i in range(2):
             for j in range(8):
+                if i == 0 and j == 4:
+                    continue
                 self.black_player.pieces.append(self.board[i][j])
 
+        self.white_player.pieces.append(self.board[7][4])
         for i in range(6, 8):
             for j in range(8):
+                if i == 7 and j == 4:
+                    continue
                 self.white_player.pieces.append(self.board[i][j])
 
     def set_field(self, x, y, piece):
@@ -205,40 +211,31 @@ class Game:
                 return False
         return True
 
-    """def print_board(self):
-        print(' ', end=' ')
-        for i in range(8):
-            print(i, end=' ')
-        for i in range(8):
-            print()
-            print(i, end=' ')
-            for j in range(8):
-                if isinstance(self.board[i][j], cp.Pawn) and self.board[i][j] in self.black_player.pieces:
-                    print('P', end=' ')
-                elif isinstance(self.board[i][j], cp.Pawn) and self.board[i][j] in self.white_player.pieces:
-                    print('p', end=' ')
-                elif isinstance(self.board[i][j], cp.Rook) and self.board[i][j] in self.black_player.pieces:
-                    print('W', end=' ')
-                elif isinstance(self.board[i][j], cp.Rook) and self.board[i][j] in self.white_player.pieces:
-                    print('w', end=' ')
-                elif isinstance(self.board[i][j], cp.Knight) and self.board[i][j] in self.black_player.pieces:
-                    print('R', end=' ')
-                elif isinstance(self.board[i][j], cp.Knight) and self.board[i][j] in self.white_player.pieces:
-                    print('r', end=' ')
-                elif isinstance(self.board[i][j], cp.Bishop) and self.board[i][j] in self.black_player.pieces:
-                    print('B', end=' ')
-                elif isinstance(self.board[i][j], cp.Bishop) and self.board[i][j] in self.white_player.pieces:
-                    print('b', end=' ')
-                elif isinstance(self.board[i][j], cp.Queen) and self.board[i][j] in self.black_player.pieces:
-                    print('Q', end=' ')
-                elif isinstance(self.board[i][j], cp.Queen) and self.board[i][j] in self.white_player.pieces:
-                    print('q', end=' ')
-                elif isinstance(self.board[i][j], cp.King) and self.board[i][j] in self.black_player.pieces:
-                    print('K', end=' ')
-                elif isinstance(self.board[i][j], cp.King) and self.board[i][j] in self.white_player.pieces:
-                    print('k', end=' ')
-                else:
-                    print(' ', end=' ')"""
+    def is_draw(self):
+        if not self.is_check(self.current_player):
+            moves = []
+            for piece in self.current_player.pieces:
+                moves += self.get_moves(piece.x, piece.y)
+            if not moves:
+                return True
+        else:
+            if len(self.current_player.pieces) == 1 and len(self.current_player.opponent.pieces) == 1:
+                return True
+            elif len(self.current_player.pieces) == 1 and len(self.current_player.opponent.pieces) == 2:
+                if isinstance(self.current_player.opponent.pieces[1], cp.Bishop) or \
+                        isinstance(self.current_player.opponent.pieces[1], cp.Knight):
+                    return True
+            elif len(self.current_player.pieces) == 2 and len(self.current_player.opponent.pieces) == 2:
+                if isinstance(self.current_player.pieces[1], cp.Bishop) and \
+                        isinstance(self.current_player.opponent.pieces[1], cp.Bishop):
+                    x_p = self.current_player.pieces[1].x
+                    y_p = self.current_player.pieces[1].y
+                    x_o = self.current_player.opponent.pieces[1].x
+                    y_o = self.current_player.opponent.pieces[1].y
+                    if (8 % (x_p + y_p) == 0 and 8 % (x_o + y_o) == 0) or (
+                            8 % (x_p + y_p) == 1 and 8 % (x_o + y_o) == 1):
+                        return True
+        return False
 
 
 def get_new_game():
