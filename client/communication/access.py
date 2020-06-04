@@ -1,4 +1,7 @@
-from socket import *
+from socket import socket, error
+
+from client.communication.message_decoder import decode
+
 BUFFER = 1024
 
 
@@ -6,8 +9,15 @@ BUFFER = 1024
 def connect(addr, port):
     s = socket()
     s.connect((addr, port))
-    print(s.recv(BUFFER).decode('ascii'))
-    s.send(b'client says hello')
+    return s
+
+
+def listen(socket_):
+    while True:
+        msg = socket_.recv(BUFFER)
+        if not msg:
+            raise error
+        decode(msg)
 
 
 def join(bot):

@@ -2,7 +2,7 @@ import json
 
 
 def decode(rec_player, message):
-    message = json.loads(message)
+    message = json.loads(message.decode('ascii'))
     if message[0] == 'chk_sqrs':
         pass
     elif message[0] == 'mv':

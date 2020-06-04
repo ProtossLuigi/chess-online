@@ -1,15 +1,24 @@
+import threading
+
+from .listen import BUFFER
+from .message_decoder import decode
+from .message_encoder import to_json
 from ..player import Player
-from socket import socket
 
 
-class ConnectedPlayer(Player):
-    def __init__(self):
-        super().__init__()
-        self.socket = None
-        self.game = None
+class ConnectedPlayer(Player, threading.Thread):
+    def __init__(self, client_socket):
+        threading.Thread.__init__(self)
+        Player.__init__(self)
+        self.socket = client_socket
 
-    def set_game(self, new_game):
-        self.game = new_game
+    def run(self):
+        while True:
+            msg = self.socket.recv(BUFFER)
+            if not msg:
+                return
+            decode(self, msg)
 
-    def listen(self, player_socket):
-        self.socket = player_socket
+    def send(self, msg):
+        json = to_json(msg)
+        self.socket.send(json)

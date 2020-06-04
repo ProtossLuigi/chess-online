@@ -1,3 +1,6 @@
 class Player:
     def __init__(self):
-        pass
+        self.game = None
+
+    def set_game(self, new_game):
+        self.game = new_game

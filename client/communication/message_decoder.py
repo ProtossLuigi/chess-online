@@ -2,7 +2,7 @@ import json
 
 
 def decode(message):
-    message = json.loads(message)
+    message = json.loads(message.decode('ascii'))
     if message[0] == 'av_sqrs':
         pass
     elif message[0] == 'moves':

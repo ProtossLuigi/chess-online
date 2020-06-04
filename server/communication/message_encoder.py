@@ -2,7 +2,7 @@ import json
 
 
 def to_json(msgs):
-    return json.dumps(msgs, separators=(',', ':'))
+    return bytearray(json.dumps(msgs, separators=(',', ':')), encoding='ascii')
 
 
 def available_squares(squares):

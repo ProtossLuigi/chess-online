@@ -1,2 +1,3 @@
-print('hello world')
-from . import communication
+from server.communication.listen import listen
+
+listen()
