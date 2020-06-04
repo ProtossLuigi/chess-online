@@ -2,8 +2,8 @@
 
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QGridLayout, QPushButton
 
-from gameWindow import GameWindow
-from queueWindow import QueueWindow
+from .gameWindow import GameWindow
+from .queueWindow import QueueWindow
 
 class MenuWindow(QWidget):
     def __init__(self, parent=None):

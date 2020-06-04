@@ -1,5 +1,4 @@
 from socket import *
-
 from server.communication.connectedPlayer import ConnectedPlayer
 
 BUFFER = 1024
@@ -14,3 +13,4 @@ def listen():
         client, addr = server_socket.accept()
         new_player = ConnectedPlayer(client)
         new_player.start()
+        print('got a player')

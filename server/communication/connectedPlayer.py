@@ -1,9 +1,9 @@
 import threading
 
-from .listen import BUFFER
 from .message_decoder import decode
 from .message_encoder import to_json
 from ..player import Player
+BUFFER = 1024
 
 
 class ConnectedPlayer(Player, threading.Thread):

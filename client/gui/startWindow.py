@@ -2,8 +2,10 @@
 
 from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QHBoxLayout, QPushButton, QLineEdit
 
-from menuWindow import MenuWindow
-from gameWindow import GameWindow
+from .menuWindow import MenuWindow
+from .gameWindow import GameWindow
+from ..communication.access import connect
+
 
 class StartWindow(QWidget):
     def __init__(self, parent=None):
@@ -37,8 +39,9 @@ class StartWindow(QWidget):
         self.show()
     
     def start(self):
-        self.menuWindow = GameWindow()
-        self.menuWindow.show()
+        # self.menuWindow = GameWindow()
+        # self.menuWindow.show()
+        connect('169.254.200.100', 51866)
 
     def exit(self):
         self.close()

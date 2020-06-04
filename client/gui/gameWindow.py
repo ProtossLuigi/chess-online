@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QWidget, QMainWindow, QGraphicsScene, QGraphicsView,
 from PyQt5.QtGui import QPalette, QColor, QPainter, QPen, QBrush, QFont
 from PyQt5.QtCore import QRect, Qt
 
-from boardWidget import BoardWidget
+from .boardWidget import BoardWidget
 
 class GameWindow(QMainWindow):
     def __init__(self, parent=None):

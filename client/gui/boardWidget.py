@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QWidget, QGraphicsScene
 from PyQt5.QtGui import QPalette, QColor, QPainter, QPen, QBrush, QPixmap, QCursor
 from PyQt5.QtCore import QRect, Qt, QPoint
 
-from boardConfig import BoardConfig as boardConfig
+from .boardConfig import BoardConfig as boardConfig
 
 class BoardWidget(QWidget):
     def __init__(self, parent=None):
