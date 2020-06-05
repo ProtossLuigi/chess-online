@@ -13,11 +13,16 @@ class GamePlayer:
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, white, black):
         self.board = [[]]
 
         self.white_player = GamePlayer()
         self.black_player = GamePlayer()
+
+        self.white = white
+        self.black = black
+        self.player = white
+        self.opponent = black
 
         self.board[0].append(cp.Rook(0, 0))
         self.board[0].append(cp.Knight(0, 1))
@@ -74,6 +79,9 @@ class Game:
                     continue
                 self.white_player.pieces.append(self.board[i][j])
 
+        self.white.your_turn()
+        self.black.opponent_turn()
+
     def set_field(self, x, y, piece):
         self.board[x][y] = piece
         if piece is not None:
@@ -95,7 +103,9 @@ class Game:
 
         return result
 
-    def get_moves(self, x, y):
+    def get_moves(self, x, y, player):
+        if player != self.player:
+            return
         moves = self.board[x][y].get_av_moves(self)
         updated_moves = []
         for move in moves:
@@ -103,7 +113,9 @@ class Game:
                 updated_moves.append(move)
         return updated_moves
 
-    def move_piece(self, x, y, dest_x, dest_y):
+    def move_piece(self, x, y, dest_x, dest_y, player):
+        if player != self.player:
+            return
         if self.board[x][y] not in self.current_player.pieces:
             return
         if (dest_x, dest_y) not in self.get_moves(self, x, y):
@@ -115,6 +127,7 @@ class Game:
             if self.board[x][y].direction == -1 and dest_x == 0 or self.board[x][y].direction == 1 and dest_x == 7:
                 self.set_field(dest_x, dest_y, self.board[x][y])
                 self.set_field(x, y, None)
+                self.player.promote_pawn(dest_x, dest_y)
                 return
         elif isinstance(self.board[x][y], cp.King):
             self.board[x][y].first_move = False
@@ -128,6 +141,9 @@ class Game:
             self.board[x][y].first_move = False
         self.set_field(dest_x, dest_y, self.board[x][y])
         self.set_field(x, y, None)
+        new_moves = [[(x, y), (dest_x, dest_y)]]
+        self.player.update_board(new_moves, None)
+        self.opponent.update.board(new_moves, None)
         self.change_player()
 
     def castling(self, player, direction):
@@ -137,36 +153,70 @@ class Game:
             self.set_field(x, 4, None)
             self.set_field(x, 5, self.board[x][7])
             self.set_field(x, 7, None)
+            new_moves = [[(x, 4), (x, 6)], [(x, 7), (x, 5)]]
         elif direction == 'left':
             self.set_field(x, 2, player.king)
             self.set_field(x, 4, None)
             self.set_field(x, 3, self.board[x][0])
             self.set_field(x, 0, None)
+            new_moves = [[(x, 4), (x, 2)], [(x, 0), (x, 3)]]
+        self.player.update_board(new_moves, None)
+        self.opponent.update_board(new_moves, None)
         self.change_player()
 
     def change_player(self):
         self.current_player = self.current_player.opponent
+        """self.player.opponent_turn()
+        self.opponent.your_turn()"""
+        if self.player == self.white:
+            self.player = self.black
+            self.opponent = self.white
+        else:
+            self.player = self.white
+            self.opponent = self.black
+
+        if self.is_checkmate(self.current_player):
+            self.player.defeat()
+            self.opponent.victory()
+            return
+        elif self.is_draw():
+            self.player.draw()
+            self.opponent.draw()
+            return
+
+        self.player.your_turn()
+        if self.is_check(self.current_player):
+            self.player.send_check()
+        self.opponent.opponent_turn()
 
     def promote_pawn(self, x, y, piece_name):
+        new_moves = [[(x - self.board[x][y].direction, y), (x, y)]]
         self.current_player.pieces.remove(self.board[x][y])
         self.set_field(x, y, None)
+        piece = ''
         if piece_name == 'knight':
+            piece = 'knight'
             knight = cp.Knight(x, y)
             self.set_field(x, y, knight)
             self.current_player.pieces.append(knight)
         elif piece_name == 'rook':
+            piece = 'rook'
             rook = cp.Rook(x, y)
             self.set_field(x, y, rook)
             self.current_player.pieces.append(rook)
         elif piece_name == 'bishop':
+            piece = 'bishop'
             bishop = cp.Bishop(x, y)
             self.set_field(x, y, bishop)
             self.current_player.pieces.append(bishop)
         elif piece_name == 'queen':
+            piece = 'queen'
             queen = cp.Queen(x, y)
             self.set_field(x, y, queen)
             self.current_player.pieces.append(queen)
 
+        self.player.update_board(new_moves, piece)
+        self.opponent.update_board(new_moves, piece)
         self.change_player()
 
     def pass_move(self):
@@ -182,7 +232,7 @@ class Game:
 
     def is_checkmate(self, player):
         for piece in player.pieces:
-            moves = self.get_moves(piece.x, piece.y)
+            moves = self.get_moves(piece.x, piece.y, self.player)
             if moves:
                 return False
         return True
@@ -191,7 +241,7 @@ class Game:
         if not self.is_check(self.current_player):
             moves = []
             for piece in self.current_player.pieces:
-                moves += self.get_moves(piece.x, piece.y)
+                moves += self.get_moves(piece.x, piece.y, self.player)
             if not moves:
                 return True
         else:
@@ -212,7 +262,3 @@ class Game:
                             8 % (x_p + y_p) == 1 and 8 % (x_o + y_o) == 1):
                         return True
         return False
-
-
-def get_new_game():
-    return Game()

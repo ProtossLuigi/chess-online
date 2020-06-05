@@ -14,6 +14,9 @@ class Player:
     def draw(self):
         pass
 
+    def send_check(self):
+        pass
+
     def your_turn(self):
         pass
 
