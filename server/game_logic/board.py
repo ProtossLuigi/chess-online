@@ -1,7 +1,8 @@
 import server.game_logic.chess_pieces as cp
+from ..player import Player
 
 
-class Player:
+class GamePlayer:
     def __init__(self):
         self.pieces = []
         self.opponent = None
@@ -10,38 +11,13 @@ class Player:
     def set_opponent(self, opponent):
         self.opponent = opponent
 
-    def victory(self):
-        pass
-
-    def defeat(self):
-        pass
-
-    def draw(self):
-        pass
-
-    def your_turn(self):
-        pass
-
-    # piece - 'queen'/'bishop'/'rook'/'knight' when promoting a pawn,  None if otherwise
-    def update_board(self, moves, piece):
-        pass
-
-    # use Game.get_moves(x, y)
-    def send_av_moves(self, moves):
-        pass
-
-    # signal when pawn reaches the other side of the board, client then choose into what piece he wants to promote
-    # his pawn
-    def promote_pawn(self, x, y):
-        pass
-
 
 class Game:
     def __init__(self):
         self.board = [[]]
 
-        self.white_player = Player()
-        self.black_player = Player()
+        self.white_player = GamePlayer()
+        self.black_player = GamePlayer()
 
         self.board[0].append(cp.Rook(0, 0))
         self.board[0].append(cp.Knight(0, 1))
