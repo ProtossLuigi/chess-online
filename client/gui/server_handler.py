@@ -36,3 +36,7 @@ def opponent_turn():
 
 def promote_pawn(x, y):
     pass  # TODO
+
+
+def update_board(moves, piece):
+    pass  # TODO
