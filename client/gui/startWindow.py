@@ -44,7 +44,7 @@ class StartWindow(QWidget):
 
     def start(self):
         try:
-            connect('127.0.1.1', 39103)
+            connect('127.0.1.1', 49151)
             listenThread = threading.Thread(target=self.listenThread)
             listenThread.start()
             join(False)

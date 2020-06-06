@@ -18,6 +18,7 @@ def connect(addr, port):
 def listen():
     while True:
         msg = active_socket.recv(BUFFER)
+        print(msg)
         if not msg:
             raise error
         decode(msg)
