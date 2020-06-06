@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QMainWindow
 
 from .gameWindow import GameWindow
-
-from ..communication.access import join
 
 class QueueWindow(QWidget):
     def __init__(self, parent=None):
@@ -12,10 +10,10 @@ class QueueWindow(QWidget):
         self.init()
 
     def init(self):
-        join(False)
         self.setGeometry(700, 400, 400, 200)
         self.setWindowTitle("Szachy kolejka")
         self.show()
 
     def game_start(color):
-        gameWindow = GameWindow()
+        gameWindow = GameWindow(color)
+        gameWindow.show()

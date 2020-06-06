@@ -6,7 +6,8 @@ import threading
 
 from .menuWindow import MenuWindow
 from .queueWindow import QueueWindow
-from ..communication.access import connect, listen
+
+from ..communication.access import connect, listen, join
 
 class StartWindow(QWidget):
     def __init__(self, parent=None):
@@ -45,14 +46,14 @@ class StartWindow(QWidget):
 
     def start(self):
         try:
-            connect('127.0.1.1', 38363)
+            connect('127.0.1.1', 47175)
             listenThread = threading.Thread(target=self.listenThread)
             listenThread.start()
+            join(False)
             self.queueWindow = QueueWindow()
             self.queueWindow.show()
-        except:
-            print("INTERNAL PROBLEM")
-        
-      
+        except Exception as exception:
+            print(f"StartWindow exception: {exception}")
+           
     def exit(self):
         self.close()

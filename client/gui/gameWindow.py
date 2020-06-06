@@ -7,8 +7,9 @@ from PyQt5.QtCore import QRect, Qt
 from .boardWidget import BoardWidget
 
 class GameWindow(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, color, parent=None):
         super().__init__(parent)
+        self.color = color
         self.init()
 
     def init(self):
@@ -28,7 +29,7 @@ class GameWindow(QMainWindow):
         whoAreYouTitleLabel.setFont(QFont('Arial', 16))
         columnLayout.addWidget(whoAreYouTitleLabel)
 
-        self.whoAreYouTitleLabel = QLabel("Biały", self)
+        self.whoAreYouTitleLabel = QLabel(self.color, self)
         self.whoAreYouTitleLabel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.whoAreYouTitleLabel.setAlignment(Qt.AlignCenter)
         self.whoAreYouTitleLabel.setFont(QFont('Arial', 14))

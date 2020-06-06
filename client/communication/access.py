@@ -24,12 +24,12 @@ def listen():
 
 
 def join(bot):
-    send(active_socket, me.to_json(me.join_game(bot)))
+    send(active_socket, me.join_game(bot))
 
 
 def check_av_moves(piece):
-    send(active_socket, me.to_json(me.check_moves(piece)))
+    send(active_socket, me.check_moves(piece))
 
 
 def move(dst):
-    send(active_socket, me.to_json(me.move(dst)))
+    send(active_socket, me.move(dst))

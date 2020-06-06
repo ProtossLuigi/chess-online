@@ -6,8 +6,6 @@ from PyQt5.QtCore import QRect, Qt, QPoint
 
 from .boardConfig import BoardConfig as boardConfig
 
-from .server_handler import *
-
 class BoardWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
