@@ -23,6 +23,9 @@ class ConnectedPlayer(Player, threading.Thread):
         json = me.to_json(msg)
         self.socket.send(json)
 
+    def start_game(self, color):
+        self.send(me.to_json(me.game_start(color)))
+
     def victory(self):
         self.send(me.to_json(me.victory()))
 
