@@ -24,5 +24,7 @@ def decode(message):
             your_turn()
         else:
             opponent_turn()
+    elif message[0] == 'update':
+        update_board(message[1], message[2])
     elif message[0] == 'promote':
         promote_pawn(message[1], message[2])
