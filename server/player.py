@@ -5,6 +5,9 @@ class Player:
     def set_game(self, new_game):
         self.game = new_game
 
+    def start_game(self, color):
+        pass
+
     def victory(self):
         pass
 
