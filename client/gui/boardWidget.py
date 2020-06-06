@@ -150,6 +150,7 @@ class BoardWidget(QWidget):
                 print(self.currentMouse["y"])
 
     def mousePressEvent(self, e):
+        from .globals import check_av_moves1
         pos = e.pos()
         x = pos.x()
         y = pos.y()
@@ -197,6 +198,8 @@ class BoardWidget(QWidget):
                                 self.moveStarted = {
                                     "started": "yes"
                                 }
+
+                                check_av_moves1((row["y"]-1,row["x"]-1))
                                 self.update()
                                 break
         elif e.button() == Qt.RightButton:
@@ -245,12 +248,12 @@ class BoardWidget(QWidget):
 
                         if (self.currentMouse == None):
                             self.currentMouse = newCurrentMouse
-                            self.update()
+                            self.repaint()
                             return
                         else:
                             if (self.currentMouse["x"] != x or self.currentMouse["y"] != y):
                                 self.currentMouse = newCurrentMouse
-                                self.update()
+                                self.repaint()
                                 return
 
     def your_turn(self):

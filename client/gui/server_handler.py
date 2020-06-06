@@ -1,17 +1,20 @@
-from .globals import *
+
 
 def game_start(color):
+    from .globals import gameWindowShow
     print(color)
     gameWindowShow(color)
 
 def your_turn():
+    from .globals import your_turn1
     your_turn1()
 
 def opponent_turn():
+    from .globals import opponent_turn1
     opponent_turn1()
 
 def available_squares(squares):
-    windowGame.availableSquares()
+    print(squares)
 
 def victory():
     pass  # TODO

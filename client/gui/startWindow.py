@@ -2,11 +2,7 @@
 
 from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QHBoxLayout, QPushButton, QLineEdit
 
-import threading
-
-from ..communication.access import connect, listen, join
-
-from .globals import initialization
+from .globals import initialization, connect1, join1, listen1
 
 class StartWindow(QWidget):
     def __init__(self, parent=None):
@@ -39,15 +35,11 @@ class StartWindow(QWidget):
         self.setWindowTitle("Szachy")
         self.show()
     
-    def listenThread(self):
-        listen()
-
     def start(self):
         try:
-            connect('127.0.1.1', 49151)
-            listenThread = threading.Thread(target=self.listenThread)
-            listenThread.start()
-            join(False)
+            connect1('127.0.1.1', 50757)
+            listen1()
+            join1(False)
             initialization()
         except Exception as exception:
             print(f"StartWindow exception: {exception}")
