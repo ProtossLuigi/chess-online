@@ -27,6 +27,8 @@ class Game:
         self.player = white
         self.opponent = black
 
+        self.current_piece = (0, 0)
+
         self.board[0].append(cp.Rook(0, 0))
         self.board[0].append(cp.Knight(0, 1))
         self.board[0].append(cp.Bishop(0, 2))
@@ -268,7 +270,8 @@ class Game:
 
     # functions called by players
     def check_available_moves(self, caller, piece):
-        pass  # TODO
+        self.current_piece = (piece[0], piece[1])
+        return self.get_moves(piece[0], piece[1], caller)
 
     def move(self, caller, destination):
-        pass  # TODO
+        self.move_piece(self.current_piece[0], self.current_piece[1], destination[0], destination[1], caller)
