@@ -15,8 +15,8 @@ class GameWindow(QMainWindow):
     def init(self):
         rowLayout = QHBoxLayout()
 
-        boardWidget = BoardWidget(self)
-        rowLayout.addWidget(boardWidget)
+        self.boardWidget = BoardWidget(self)
+        rowLayout.addWidget(self.boardWidget)
 
         columnLayout = QVBoxLayout()
         columnLayout.setContentsMargins(0, 6, 0, 0)
@@ -52,3 +52,8 @@ class GameWindow(QMainWindow):
         painter = QPainter(self)
         painter.fillRect(self.rect(), QBrush(Qt.white, Qt.SolidPattern))
    
+    def your_turn(self):
+        self.boardWidget.your_turn()
+    
+    def opponent_turn(self):
+        self.boardWidget.opponent_turn()

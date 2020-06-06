@@ -1,21 +1,17 @@
-from .queueWindow import QueueWindow
+from .globals import *
 
 def game_start(color):
-    print("game_start")
-    queueWindow = QueueWindow()
-    return queueWindow.game_start(color)
-
-from .boardWidget import BoardWidget
-boardWidget = BoardWidget()
+    print(color)
+    gameWindowShow(color)
 
 def your_turn():
-    boardWidget.your_turn()
+    your_turn1()
 
 def opponent_turn():
-    boardWidget.opponent_turn()
+    opponent_turn1()
 
 def available_squares(squares):
-    boardWidget.available_squares(squares)
+    windowGame.availableSquares()
 
 def victory():
     pass  # TODO
