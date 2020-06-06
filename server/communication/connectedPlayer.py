@@ -24,34 +24,34 @@ class ConnectedPlayer(Player, threading.Thread):
         self.socket.send(json)
 
     def start_game(self, color):
-        self.send(me.to_json(me.game_start(color)))
+        self.send(me.game_start(color))
 
     def victory(self):
-        self.send(me.to_json(me.victory()))
+        self.send(me.victory())
 
     def defeat(self):
-        self.send(me.to_json(me.defeat()))
+        self.send(me.defeat())
 
     def draw(self):
-        self.send(me.to_json(me.draw()))
+        self.send(me.draw())
 
     def send_check(self):
-        self.send(me.to_json(me.check()))
+        self.send(me.check())
 
     def your_turn(self):
-        self.send(me.to_json(me.your_turn()))
+        self.send(me.your_turn())
 
     def opponent_turn(self):
-        self.send(me.to_json(me.opponent_turn()))
+        self.send(me.opponent_turn())
 
     def update_board(self, moves, piece):
-        self.send(me.to_json(me.update_board(moves, piece)))
+        self.send(me.update_board(moves, piece))
 
     def send_av_moves(self, moves):
-        self.send(me.to_json(me.available_squares(moves)))
+        self.send(me.available_squares(moves))
 
     def promote_pawn(self, x, y):
-        self.send(me.to_json(me.promote_pawn(x, y)))
+        self.send(me.promote_pawn(x, y))
 
     def move(self, dst):
         self.game.move(self, dst)

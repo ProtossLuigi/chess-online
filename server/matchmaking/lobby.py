@@ -15,9 +15,9 @@ def join(player, bot):
     if bot:
         print('game vs bot NYI')
     elif Lobby.waitroom.empty():
-        Lobby.waitroom.put(player)
+        Lobby.waitroom.put_nowait(player)
     else:
-        players = [Lobby.waitroom.get(), Lobby.waitroom.get()]
+        players = [Lobby.waitroom.get_nowait(), player]
         shuffle(players)
         Game(players[0], players[1])
     Lobby.lobby_lock.release()
