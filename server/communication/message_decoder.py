@@ -6,7 +6,7 @@ from server.matchmaking.lobby import join
 def decode(caller, msg):
     print(msg)
     msg = msg.decode('ascii')
-    for line in msg:
+    for line in msg.split():
         message = json.loads(line)
         if message[0] == 'chk_sqrs':
             caller.check_av_sqrs((message[1], message[2]))

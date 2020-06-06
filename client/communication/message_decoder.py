@@ -6,7 +6,7 @@ from ..gui.server_handler import *
 def decode(msg):
     print(msg)
     msg = msg.decode('ascii')
-    for line in msg:
+    for line in msg.split():
         message = json.loads(line)
         if message[0] == 'av_sqrs':
             available_squares(message[1:])
