@@ -42,10 +42,16 @@ class ConnectedPlayer(Player, threading.Thread):
         self.send(me.to_json(me.opponent_turn()))
 
     def update_board(self, moves, piece):
-        pass  # TODO
+        self.send(me.to_json(me.update_board(moves, piece)))
 
     def send_av_moves(self, moves):
         self.send(me.to_json(me.available_squares(moves)))
 
     def promote_pawn(self, x, y):
         self.send(me.to_json(me.promote_pawn(x, y)))
+
+    def move(self, dst):
+        self.game.move(self, dst)
+
+    def check_av_sqrs(self, piece):
+        self.game.check_available_moves(self, piece)

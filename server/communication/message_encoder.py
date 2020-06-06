@@ -43,3 +43,7 @@ def opponent_turn():
 
 def promote_pawn(x, y):
     return ['promote', x, y]
+
+
+def update_board(moves, piece):
+    return ['update', moves, piece]

@@ -13,5 +13,5 @@ def check_moves(piece):
     return ['chk_sqrs', piece[0], piece[1]]
 
 
-def move(sqr_from, sqr_to):
-    return ['mv'] + sqr_from + sqr_to
+def move(sqr_to):
+    return ['mv', sqr_to[0], sqr_to[1]]

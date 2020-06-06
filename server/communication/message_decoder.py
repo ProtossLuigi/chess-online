@@ -1,11 +1,13 @@
 import json
 
+from server.matchmaking.lobby import join
 
-def decode(rec_player, message):
+
+def decode(caller, message):
     message = json.loads(message.decode('ascii'))
     if message[0] == 'chk_sqrs':
-        pass
+        caller.check_av_sqrs((message[1], message[2]))
     elif message[0] == 'mv':
-        pass
+        caller.move((message[1], message[2]))
     elif message[0] == 'join':
-        pass
+        join(caller, message[1])

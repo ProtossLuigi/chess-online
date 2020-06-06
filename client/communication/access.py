@@ -1,5 +1,7 @@
 from socket import socket, error
 
+from . import message_encoder as me
+from client.communication.connection import send
 from client.communication.message_decoder import decode
 
 BUFFER = 1024
@@ -22,12 +24,12 @@ def listen():
 
 
 def join(bot):
-    pass
+    send(active_socket, me.to_json(me.join_game(bot)))
 
 
 def check_av_moves(piece):
-    pass
+    send(active_socket, me.to_json(me.check_moves(piece)))
 
 
 def move(dst):
-    pass
+    send(active_socket, me.to_json(me.move(dst)))

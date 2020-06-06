@@ -265,3 +265,10 @@ class Game:
                             8 % (x_p + y_p) == 1 and 8 % (x_o + y_o) == 1):
                         return True
         return False
+
+    # functions called by players
+    def check_available_moves(self, caller, piece):
+        pass  # TODO
+
+    def move(self, caller, destination):
+        pass  # TODO
