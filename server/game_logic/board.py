@@ -19,6 +19,9 @@ class Game:
         self.white_player = GamePlayer()
         self.black_player = GamePlayer()
 
+        white.set_game(self)
+        black.set_game(self)
+
         self.white = white
         self.black = black
         self.player = white

@@ -9,10 +9,6 @@ def available_squares(squares):
     return ['av_sqrs'] + squares
 
 
-def moves(mvs):
-    return ['moves', mvs]
-
-
 def game_start(color):
     return ['start', color]
 
@@ -25,5 +21,25 @@ def defeat():
     return ['defeat']
 
 
+def draw():
+    return ['draw']
+
+
 def opponent_dc():
     return ['disconnect']
+
+
+def check():
+    return ['check']
+
+
+def your_turn():
+    return ['turn', True]
+
+
+def opponent_turn():
+    return ['turn', False]
+
+
+def promote_pawn(x, y):
+    return ['promote', x, y]

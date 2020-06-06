@@ -1,17 +1,28 @@
 import json
 
+from ..gui.server_handler import *
+
 
 def decode(message):
     message = json.loads(message.decode('ascii'))
     if message[0] == 'av_sqrs':
-        pass
-    elif message[0] == 'moves':
-        pass
+        available_squares(message[1:])
     elif message[0] == 'start':
-        pass
+        game_start(message[1])
     elif message[0] == 'victory':
-        pass
+        victory()
     elif message[0] == 'defeat':
-        pass
+        defeat()
+    elif message[0] == 'draw':
+        draw()
     elif message[0] == 'disconnect':
-        pass
+        opponent_dc()
+    elif message[0] == 'check':
+        check()
+    elif message[0] == 'turn':
+        if message[1]:
+            your_turn()
+        else:
+            opponent_turn()
+    elif message[0] == 'promote':
+        promote_pawn(message[1], message[2])
