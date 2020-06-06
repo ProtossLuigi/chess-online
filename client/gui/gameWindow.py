@@ -7,15 +7,16 @@ from PyQt5.QtCore import QRect, Qt
 from .boardWidget import BoardWidget
 
 class GameWindow(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, color, parent=None):
         super().__init__(parent)
+        self.color = color
         self.init()
 
     def init(self):
         rowLayout = QHBoxLayout()
 
-        boardWidget = BoardWidget(self)
-        rowLayout.addWidget(boardWidget)
+        self.boardWidget = BoardWidget(self)
+        rowLayout.addWidget(self.boardWidget)
 
         columnLayout = QVBoxLayout()
         columnLayout.setContentsMargins(0, 6, 0, 0)
@@ -28,7 +29,7 @@ class GameWindow(QMainWindow):
         whoAreYouTitleLabel.setFont(QFont('Arial', 16))
         columnLayout.addWidget(whoAreYouTitleLabel)
 
-        self.whoAreYouTitleLabel = QLabel("Biały", self)
+        self.whoAreYouTitleLabel = QLabel(self.color, self)
         self.whoAreYouTitleLabel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.whoAreYouTitleLabel.setAlignment(Qt.AlignCenter)
         self.whoAreYouTitleLabel.setFont(QFont('Arial', 14))
@@ -51,3 +52,8 @@ class GameWindow(QMainWindow):
         painter = QPainter(self)
         painter.fillRect(self.rect(), QBrush(Qt.white, Qt.SolidPattern))
    
+    def your_turn(self):
+        self.boardWidget.your_turn()
+    
+    def opponent_turn(self):
+        self.boardWidget.opponent_turn()

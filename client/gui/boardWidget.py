@@ -6,8 +6,6 @@ from PyQt5.QtCore import QRect, Qt, QPoint
 
 from .boardConfig import BoardConfig as boardConfig
 
-from .server_handler import *
-
 class BoardWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -148,10 +146,11 @@ class BoardWidget(QWidget):
                 painter.setOpacity(0.6)
                 rect = self.currentMouse["rect"]
                 painter.fillRect(rect["position"], rect["brush"])
-                # print(self.currentMouse["x"])
-                # print(self.currentMouse["y"])
+                print(self.currentMouse["x"])
+                print(self.currentMouse["y"])
 
     def mousePressEvent(self, e):
+        from .globals import check_av_moves1
         pos = e.pos()
         x = pos.x()
         y = pos.y()
@@ -199,6 +198,8 @@ class BoardWidget(QWidget):
                                 self.moveStarted = {
                                     "started": "yes"
                                 }
+
+                                check_av_moves1((row["y"]-1,row["x"]-1))
                                 self.update()
                                 break
         elif e.button() == Qt.RightButton:
@@ -247,10 +248,16 @@ class BoardWidget(QWidget):
 
                         if (self.currentMouse == None):
                             self.currentMouse = newCurrentMouse
-                            self.update()
+                            self.repaint()
                             return
                         else:
                             if (self.currentMouse["x"] != x or self.currentMouse["y"] != y):
                                 self.currentMouse = newCurrentMouse
-                                self.update()
+                                self.repaint()
                                 return
+
+    def your_turn(self):
+        self.is_turn = True
+
+    def opponent_turn(self):
+        self.is_turn = False

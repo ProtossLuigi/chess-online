@@ -84,7 +84,9 @@ class Game:
                     continue
                 self.white_player.pieces.append(self.board[i][j])
 
+        self.white.start_game("Bialy")
         self.white.your_turn()
+        self.black.start_game("Czarny")
         self.black.opponent_turn()
 
     def set_field(self, x, y, piece):

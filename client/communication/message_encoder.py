@@ -2,7 +2,7 @@ import json
 
 
 def to_json(message):
-    return bytearray(json.dumps(message, separators=(',', ':')), encoding='ascii')
+    return bytearray(json.dumps(message, separators=(',', ':')) + ' ', encoding='ascii')
 
 
 def join_game(bot):
