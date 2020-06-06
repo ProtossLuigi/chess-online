@@ -1,1 +1,1 @@
-import client.gui
+from . import gui

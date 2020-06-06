@@ -81,27 +81,27 @@ class Type:
     
 class King(Type):
     def __init__(self, color):
-        Type.__init__(self, "king", color, "./images/king_white.png", "./images/king.png", 24, 8)
+        Type.__init__(self, "king", color, "./client/gui/images/king_white.png", "./client/gui/images/king.png", 24, 8)
 
 class Queen(Type):
     def __init__(self, color):
-        Type.__init__(self, "queen", color, "./images/queen_white.png", "./images/queen.png", 24, 8)
+        Type.__init__(self, "queen", color, "./client/gui/images/queen_white.png", "./client/gui/images/queen.png", 24, 8)
 
 class Rook(Type):
     def __init__(self, color):
-        Type.__init__(self, "rook", color, "./images/rook_white.png", "./images/rook.png", 22, 8)
+        Type.__init__(self, "rook", color, "./client/gui/images/rook_white.png", "./client/gui/images/rook.png", 22, 8)
 
 class Knight(Type):
     def __init__(self, color):
-        Type.__init__(self, "knight", color, "./images/knight_white.png", "./images/knight.png", 20, 8)
+        Type.__init__(self, "knight", color, "./client/gui/images/knight_white.png", "./client/gui/images/knight.png", 20, 8)
 
 class Bishop(Type):
     def __init__(self, color):
-        Type.__init__(self, "bishop", color, "./images/bishop_white.png", "./images/bishop.png", 24, 8)
+        Type.__init__(self, "bishop", color, "./client/gui/images/bishop_white.png", "./client/gui/images/bishop.png", 24, 8)
 
 class Pawn(Type):
     def __init__(self, color):
-        Type.__init__(self, "pawn", color, "./images/pawn_white.png", "./images/pawn.png", 20, 8)
+        Type.__init__(self, "pawn", color, "./client/gui/images/pawn_white.png", "./client/gui/images/pawn.png", 20, 8)
 
 class Nothing(Type):
     def __init__(self, color):
