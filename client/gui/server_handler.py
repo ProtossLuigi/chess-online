@@ -6,12 +6,16 @@ def game_start(color):
     return queueWindow.game_start(color)
 
 from .boardWidget import BoardWidget
+boardWidget = BoardWidget()
 
 def your_turn():
-    pass  # TODO
+    boardWidget.your_turn()
+
+def opponent_turn():
+    boardWidget.opponent_turn()
 
 def available_squares(squares):
-    pass  # TODO
+    boardWidget.available_squares(squares)
 
 def victory():
     pass  # TODO
@@ -30,10 +34,6 @@ def opponent_dc():
 
 
 def check():
-    pass  # TODO
-
-
-def opponent_turn():
     pass  # TODO
 
 
