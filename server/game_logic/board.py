@@ -273,7 +273,7 @@ class Game:
     # functions called by players
     def check_available_moves(self, caller, piece):
         self.current_piece = (piece[0], piece[1])
-        return self.get_moves(piece[0], piece[1], caller)
+        caller.send_av_moves(self.get_moves(piece[0], piece[1], caller))
 
     def move(self, caller, destination):
         self.move_piece(self.current_piece[0], self.current_piece[1], destination[0], destination[1], caller)
