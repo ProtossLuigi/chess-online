@@ -1,9 +1,11 @@
+from .queueWindow import QueueWindow
+
 def available_squares(squares):
     pass  # TODO
 
 
 def game_start(color):
-    pass  # TODO
+    return queueWindow.game_start(color)
 
 
 def victory():

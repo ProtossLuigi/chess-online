@@ -2,6 +2,8 @@
 
 from PyQt5.QtWidgets import QWidget
 
+from .gameWindow import GameWindow
+
 from ..communication.access import join
 
 class QueueWindow(QWidget):
@@ -14,3 +16,6 @@ class QueueWindow(QWidget):
         self.setGeometry(700, 400, 400, 200)
         self.setWindowTitle("Szachy kolejka")
         self.show()
+
+    def game_start(color):
+        gameWindow = GameWindow()
