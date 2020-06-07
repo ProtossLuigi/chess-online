@@ -1,11 +1,13 @@
 from . import config
 import numpy as np
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from keras.models import Sequential, load_model, Model
 from keras.layers import Input, Dense, Conv2D, Flatten, BatchNormalization, Activation, LeakyReLU, add
 from keras.optimizers import SGD
 from keras import regularizers
+
+tf.disable_v2_behavior()
 
 
 def softmax_cross_entropy_with_logits(y_true, y_pred):
