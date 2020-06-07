@@ -37,6 +37,5 @@ def move(dst):
 
 
 def promote(name):
-    print("sdad")
     print(name)
     send(active_socket, me.promote(name))

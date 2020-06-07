@@ -130,11 +130,10 @@ class GameWindow(QMainWindow):
         self.boardWidget.update_board(moves, piece)
 
     def promote_pawn(self, x, y):
-        print("duu")
+        pass
 
     def queen1(self):
         from .globals import promote1
-        print("asokdasodk")
         promote1("queen")
         self.boardWidget.promote_pawn(0, 0)
 
