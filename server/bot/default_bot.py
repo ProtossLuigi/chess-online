@@ -72,7 +72,7 @@ class DefaultBot(Player):
             else:
                 weights.append(0.25)
         cap = sum(weights)
-        r = uniform(cap)
+        r = uniform(0., cap)
         s = 0.
         for i in range(len(moves)):
             if s <= r < s + weights[i]:
