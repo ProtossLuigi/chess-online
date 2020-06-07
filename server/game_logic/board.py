@@ -256,7 +256,6 @@ class Game:
                 moves += self.get_moves(piece.x, piece.y, self.player)
             if not moves:
                 return True
-
         if len(self.current_player.pieces) == 1 and len(self.current_player.opponent.pieces) == 1:
             return True
         elif len(self.current_player.pieces) == 1 and len(self.current_player.opponent.pieces) == 2:
@@ -265,13 +264,13 @@ class Game:
                 return True
         elif len(self.current_player.pieces) == 2 and len(self.current_player.opponent.pieces) == 2:
             if isinstance(self.current_player.pieces[1], cp.Bishop) and \
-                    isinstance(self.current_player.opponent.pieces[1], cp.Bishop):
+                isinstance(self.current_player.opponent.pieces[1], cp.Bishop):
                 x_p = self.current_player.pieces[1].x
                 y_p = self.current_player.pieces[1].y
                 x_o = self.current_player.opponent.pieces[1].x
                 y_o = self.current_player.opponent.pieces[1].y
                 if (8 % (x_p + y_p) == 0 and 8 % (x_o + y_o) == 0) or (
-                        8 % (x_p + y_p) == 1 and 8 % (x_o + y_o) == 1):
+                    8 % (x_p + y_p) == 1 and 8 % (x_o + y_o) == 1):
                     return True
         return False
 

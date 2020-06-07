@@ -30,13 +30,13 @@ def queueWindowShow():
     global queueWindow
     queueWindow = QueueWindow()
     queueWindow.show()
-    queueWindow.close()
+    menuWindow.close()
 
 def gameWindowShow(color):
     global gameWindow
     gameWindow = GameWindow(color)
     gameWindow.show()
-    queueWindow.close()
+    menuWindow.close()
 
 def your_turn1():
     gameWindow.your_turn()
@@ -51,7 +51,19 @@ def update_board1(moves, piece):
     gameWindow.update_board(moves, piece)
 
 def promote_pawn1(x, y):
-    self.promote1("queen")
+    promote1("queen")
+
+def victory1():
+    gameWindow.victory()
+
+def defeat1():
+    gameWindow.defeat()
+
+def draw1():
+    gameWindow.draw()
+
+def check1():
+    gameWindow.check()
 
 ######
 

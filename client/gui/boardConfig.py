@@ -54,6 +54,9 @@ class BoardConfig():
     def nothing():
         return Nothing("")
 
+    def queen(color):
+        return Queen(color)
+
 class Type:
     def __init__(self, name, color, iconBialy, iconCzarny, left, top):
         if (color == "Bialy"):

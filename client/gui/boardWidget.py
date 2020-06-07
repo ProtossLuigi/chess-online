@@ -286,7 +286,19 @@ class BoardWidget(QWidget):
             previous = self.boardView[pieceFrom[0] + 1][pieceFrom[1] + 1]
             previous_value = previous["iconContainer"]["value"]
             if (previous_value.getName() != "nothing"):
-                self.boardView[pieceTo[0] + 1][pieceTo[1] + 1]["iconContainer"]["value"] = previous_value
+                print(piece)
+                print(isinstance(piece, str))
+                if (isinstance(piece, str)):
+                    if (self.is_turn and self.color == "Bialy"):
+                        self.boardView[pieceTo[0] + 1][pieceTo[1] + 1]["iconContainer"]["value"] = boardConfig.queen("Bialy")
+                    if (not self.is_turn and self.color == "Bialy"):
+                        self.boardView[pieceTo[0] + 1][pieceTo[1] + 1]["iconContainer"]["value"] = boardConfig.queen("Czarny")
+                    if (self.is_turn and self.color == "Czarny"):
+                        self.boardView[pieceTo[0] + 1][pieceTo[1] + 1]["iconContainer"]["value"] = boardConfig.queen("Czarny")
+                    if (not self.is_turn and self.color == "Czarny"):
+                        self.boardView[pieceTo[0] + 1][pieceTo[1] + 1]["iconContainer"]["value"] = boardConfig.queen("Bialy")
+                else:
+                    self.boardView[pieceTo[0] + 1][pieceTo[1] + 1]["iconContainer"]["value"] = previous_value
                 self.boardView[pieceFrom[0] + 1][pieceFrom[1] + 1]["iconContainer"]["value"] = boardConfig.nothing()
                 self.display_update.emit()
 

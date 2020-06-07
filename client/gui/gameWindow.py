@@ -71,7 +71,18 @@ class GameWindow(QMainWindow):
         self.knight = QPushButton("&knight", self)
         self.knight.clicked.connect(self.knight1)
         columnLayout.addWidget(self.knight)
+
+        self.margin2 = QLabel("", self)
+        self.margin2.setMargin(20)
+        columnLayout.addWidget(self.margin2)
         
+        self.checkLabel = QLabel("", self)
+        self.checkLabel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.checkLabel.setAlignment(Qt.AlignCenter)
+        self.checkLabel.setFont(QFont('Arial', 18))
+        self.checkLabel.setStyleSheet('color: red')
+        columnLayout.addWidget(self.checkLabel)
+
         widgetColumn = QWidget()
         widgetColumn.setLayout(columnLayout)
         widgetColumn.setStyleSheet("background-color:lightGray;")
@@ -94,6 +105,7 @@ class GameWindow(QMainWindow):
             self.turnLabel.setText("Czarny")
         if (not your and self.color == "Czarny"):
             self.turnLabel.setText("Bialy")
+        self.checkLabel.setText("")
         self.display_update.emit()
 
     def paintEvent(self, e):
@@ -140,3 +152,23 @@ class GameWindow(QMainWindow):
         from .globals import promote1
         promote1("knight")
         self.boardWidget.promote_pawn(0, 0)
+
+    def victory(self):
+        self.checkLabel.setText("Zwycięstwo!!")
+        self.checkLabel.setStyleSheet('color: green')
+        self.display_update.emit()
+
+    def defeat(self):
+        self.checkLabel.setText("Przegrana!!")
+        self.checkLabel.setStyleSheet('color: red')
+        self.display_update.emit()
+
+    def draw(self):
+        self.checkLabel.setText("Remis!!")
+        self.checkLabel.setStyleSheet('color: black')
+        self.display_update.emit()
+
+    def check(self):
+        self.checkLabel.setStyleSheet('color: blue')
+        self.checkLabel.setText("Masz szacha, ratuj króla")
+        self.display_update.emit()

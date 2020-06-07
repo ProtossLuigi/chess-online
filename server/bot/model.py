@@ -1,12 +1,20 @@
 from . import config
 import numpy as np
 
+<<<<<<< HEAD
 import tensorflow.compat.v1 as tf
+=======
+# import tensorflow as tf
+>>>>>>> design100
 from keras.models import Sequential, load_model, Model
 from keras.layers import Input, Dense, Conv2D, Flatten, BatchNormalization, Activation, LeakyReLU, add
 from keras.optimizers import SGD
 from keras import regularizers
 
+<<<<<<< HEAD
+=======
+import tensorflow.compat.v1 as tf
+>>>>>>> design100
 tf.disable_v2_behavior()
 
 

@@ -40,6 +40,7 @@ class StartWindow(QWidget):
             connect1('169.254.200.100', 56241)
             listen1()
             initialization()
+            self.close()
         except Exception as exception:
             print(f"StartWindow exception: {exception}")
            
