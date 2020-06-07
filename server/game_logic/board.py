@@ -111,6 +111,8 @@ class Game:
         return result
 
     def get_moves(self, x, y, player):
+        if self.board[x][y] is None:
+            return []
         if player != self.player:
             return
         moves = self.board[x][y].get_av_moves(self)
@@ -183,13 +185,13 @@ class Game:
             self.player = self.white
             self.opponent = self.black
 
-        if self.is_checkmate(self.current_player):
-            self.player.defeat()
-            self.opponent.victory()
-            return
-        elif self.is_draw():
+        if self.is_draw():
             self.player.draw()
             self.opponent.draw()
+            return
+        elif self.is_checkmate(self.current_player):
+            self.player.defeat()
+            self.opponent.victory()
             return
 
         self.player.your_turn()
@@ -248,28 +250,29 @@ class Game:
 
     def is_draw(self):
         if not self.is_check(self.current_player):
+            print("Not in check")
             moves = []
             for piece in self.current_player.pieces:
                 moves += self.get_moves(piece.x, piece.y, self.player)
             if not moves:
                 return True
-        else:
-            if len(self.current_player.pieces) == 1 and len(self.current_player.opponent.pieces) == 1:
+
+        if len(self.current_player.pieces) == 1 and len(self.current_player.opponent.pieces) == 1:
+            return True
+        elif len(self.current_player.pieces) == 1 and len(self.current_player.opponent.pieces) == 2:
+            if isinstance(self.current_player.opponent.pieces[1], cp.Bishop) or \
+                    isinstance(self.current_player.opponent.pieces[1], cp.Knight):
                 return True
-            elif len(self.current_player.pieces) == 1 and len(self.current_player.opponent.pieces) == 2:
-                if isinstance(self.current_player.opponent.pieces[1], cp.Bishop) or \
-                        isinstance(self.current_player.opponent.pieces[1], cp.Knight):
+        elif len(self.current_player.pieces) == 2 and len(self.current_player.opponent.pieces) == 2:
+            if isinstance(self.current_player.pieces[1], cp.Bishop) and \
+                    isinstance(self.current_player.opponent.pieces[1], cp.Bishop):
+                x_p = self.current_player.pieces[1].x
+                y_p = self.current_player.pieces[1].y
+                x_o = self.current_player.opponent.pieces[1].x
+                y_o = self.current_player.opponent.pieces[1].y
+                if (8 % (x_p + y_p) == 0 and 8 % (x_o + y_o) == 0) or (
+                        8 % (x_p + y_p) == 1 and 8 % (x_o + y_o) == 1):
                     return True
-            elif len(self.current_player.pieces) == 2 and len(self.current_player.opponent.pieces) == 2:
-                if isinstance(self.current_player.pieces[1], cp.Bishop) and \
-                        isinstance(self.current_player.opponent.pieces[1], cp.Bishop):
-                    x_p = self.current_player.pieces[1].x
-                    y_p = self.current_player.pieces[1].y
-                    x_o = self.current_player.opponent.pieces[1].x
-                    y_o = self.current_player.opponent.pieces[1].y
-                    if (8 % (x_p + y_p) == 0 and 8 % (x_o + y_o) == 0) or (
-                            8 % (x_p + y_p) == 1 and 8 % (x_o + y_o) == 1):
-                        return True
         return False
 
     # functions called by players
