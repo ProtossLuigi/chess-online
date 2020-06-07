@@ -3,23 +3,22 @@
 from PyQt5.QtWidgets import QWidget, QMainWindow, QGraphicsScene, QGraphicsView, QHBoxLayout, QVBoxLayout, QPushButton, QLabel, QBoxLayout, QSizePolicy
 from PyQt5.QtGui import QPalette, QColor, QPainter, QPen, QBrush, QFont
 from PyQt5.QtCore import QRect, Qt
+from PyQt5 import QtCore
 
 from .boardWidget import BoardWidget
 
 class GameWindow(QMainWindow):
 
-    #display_update = QtCore.pyqtSignal()
+    display_update = QtCore.pyqtSignal()
 
-    # def window_update(self):
-    #     print(threading.main_thread().ident)
-    #     print(threading.current_thread().ident)
-    #     self.repaint()
+    def window_update(self):
+        self.repaint()
 
     def __init__(self, color, parent=None):
         super().__init__(parent)
         self.color = color
         self.init()
-       # self.display_update.connect(self.window_update)
+        self.display_update.connect(self.window_update)
 
     def init(self):
         rowLayout = QHBoxLayout()
@@ -44,8 +43,11 @@ class GameWindow(QMainWindow):
         self.whoAreYouTitleLabel.setFont(QFont('Arial', 14))
         columnLayout.addWidget(self.whoAreYouTitleLabel)
 
+        self.margin = QLabel("", self)
+        self.margin.setMargin(20)
+        columnLayout.addWidget(self.margin)
+
         turlTitleLabel = QLabel("Aktulnie gra: ", self)
-        turlTitleLabel.setContentsMargins(0, 40, 0, 0)
         turlTitleLabel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         turlTitleLabel.setAlignment(Qt.AlignCenter)
         turlTitleLabel.setFont(QFont('Arial', 16))
@@ -79,7 +81,7 @@ class GameWindow(QMainWindow):
             self.turnLabel.setText("Czarny")
         if (not your and self.color == "Czarny"):
             self.turnLabel.setText("Bialy")
-       # self.re
+        self.display_update.emit()
 
     def paintEvent(self, e):
         painter = QPainter(self)

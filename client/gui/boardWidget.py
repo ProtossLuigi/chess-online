@@ -11,7 +11,7 @@ import threading
 
 class BoardWidget(QWidget):
 
-    def dupa(self):
+    def window_update(self):
         self.repaint()
 
     display_update = QtCore.pyqtSignal()
@@ -32,7 +32,7 @@ class BoardWidget(QWidget):
         self.setMouseTracking(True)
         self.rightPressedPosition = None
         self.availableMoves = []
-        self.display_update.connect(self.dupa)
+        self.display_update.connect(self.window_update)
 
     def createBoard(self):
         width, height = boardConfig.boardSize()
