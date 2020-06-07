@@ -15,3 +15,7 @@ def check_moves(piece):
 
 def move(sqr_to):
     return ['mv', sqr_to[0], sqr_to[1]]
+
+
+def promote(name):
+    return ['promote', name]

@@ -125,7 +125,7 @@ class Game:
             return
         if self.board[x][y] not in self.current_player.pieces:
             return
-        if (dest_x, dest_y) not in self.get_moves(self, x, y):
+        if (dest_x, dest_y) not in self.get_moves(x, y, player):
             return
         if self.board[dest_x][dest_y] in self.current_player.opponent.pieces:
             self.current_player.opponent.pieces.remove(self.board[dest_x][dest_y])
@@ -150,7 +150,7 @@ class Game:
         self.set_field(x, y, None)
         new_moves = [[(x, y), (dest_x, dest_y)]]
         self.player.update_board(new_moves, None)
-        self.opponent.update.board(new_moves, None)
+        self.opponent.update_board(new_moves, None)
         self.change_player()
 
     def castling(self, player, direction):
@@ -276,4 +276,11 @@ class Game:
         caller.send_av_moves(self.get_moves(piece[0], piece[1], caller))
 
     def move(self, caller, destination):
+        print(self.current_piece[0])
+        print(self.current_piece[1])
+        print(destination[0])
+        print(destination[1])
         self.move_piece(self.current_piece[0], self.current_piece[1], destination[0], destination[1], caller)
+
+    def promote(self, name):
+        pass  # TODO

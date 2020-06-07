@@ -58,3 +58,6 @@ class ConnectedPlayer(Player, threading.Thread):
 
     def check_av_sqrs(self, piece):
         self.game.check_available_moves(self, piece)
+
+    def promote(self, name):
+        self.game.promote(name)

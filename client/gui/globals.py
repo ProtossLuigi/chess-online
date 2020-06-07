@@ -36,5 +36,16 @@ def your_turn1():
 def opponent_turn1():
     gameWindow.opponent_turn()
 
+def available_squares1(moves):
+    gameWindow.available_moves(moves)
+
+def update_board1(moves, piece):
+    gameWindow.update_board(moves, piece)
+
+######
+
 def check_av_moves1(piece):
     check_av_moves(piece)
+
+def move1(dst):
+    move(dst)

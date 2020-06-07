@@ -3,12 +3,22 @@
 from PyQt5.QtWidgets import QWidget, QGraphicsScene
 from PyQt5.QtGui import QPalette, QColor, QPainter, QPen, QBrush, QPixmap, QCursor
 from PyQt5.QtCore import QRect, Qt, QPoint
+from PyQt5 import QtCore
 
 from .boardConfig import BoardConfig as boardConfig
 
+import threading
+
 class BoardWidget(QWidget):
-    def __init__(self, parent=None):
+
+    def dupa(self):
+        self.repaint()
+
+    display_update = QtCore.pyqtSignal()
+
+    def __init__(self, color, parent=None):
         super().__init__(parent)
+        self.color = color
         self.init()
 
     def init(self):
@@ -22,6 +32,7 @@ class BoardWidget(QWidget):
         self.setMouseTracking(True)
         self.rightPressedPosition = None
         self.availableMoves = []
+        self.display_update.connect(self.dupa)
 
     def createBoard(self):
         width, height = boardConfig.boardSize()
@@ -109,29 +120,32 @@ class BoardWidget(QWidget):
                         if (view != None):
                             painter.drawPixmap(QPoint(iconContainer["position"].x() + value.marginLeft(), iconContainer["position"].y() + value.marginTop()), view) 
         
-        if (len(self.availableMoves) > 0 and self.moveDone):
-            previous_x = self.currentMouse["y"]
-            previous_y = self.currentMouse["x"]
-            for available in self.availableMoves:
-                if (available["chosen"]):
-                    next_x = available["y"]
-                    next_y = available["x"]
-                    previous = self.boardView[previous_x][previous_y]
-                    previous_value = previous["iconContainer"]["value"]
-                    self.boardView[next_x][next_y]["iconContainer"]["value"] = previous_value
-                    self.boardView[previous_x][previous_y]["iconContainer"]["value"] = boardConfig.nothing()
-                    self.availableMoves = []
-                    break
+        # if (len(self.availableMoves) > 0 and self.moveDone):
+        #     previous_x = self.currentMouse["y"]
+        #     previous_y = self.currentMouse["x"]
+        #     for available in self.availableMoves:
+        #         if (available["chosen"]):
+        #             next_x = available["y"]
+        #             next_y = available["x"]
+        #             previous = self.boardView[previous_x][previous_y]
+        #             previous_value = previous["iconContainer"]["value"]
+        #             # self.boardView[next_x][next_y]["iconContainer"]["value"] = previous_value
+        #             # self.boardView[previous_x][previous_y]["iconContainer"]["value"] = boardConfig.nothing()
+        #             self.availableMoves = []
+        #             break
 
         if (self.currentMouse != None):
             if (self.moveStarted != None and self.moveStarted["started"] == "no"):
                 painter.setOpacity(0)
                 rect = self.currentMouse["rect"]
                 painter.fillRect(rect["position"], rect["brush"])
-                self.calculateMouseEvent(self.rightPressedPosition)
                 self.moveStarted = {
                     "started": "not_yet"
                 }
+                if (len(self.availableMoves) > 0):
+                    for available in self.availableMoves:
+                        rect = QRect(boardConfig.legendShort() + (available["x"]-1) * boardConfig.rectSize(), boardConfig.legendShort() + (available["y"]-1) * boardConfig.rectSize(), boardConfig.rectSize(), boardConfig.rectSize()) 
+                        painter.fillRect(rect, boardConfig.brushMouseMove())        
             elif (self.moveStarted != None and self.moveStarted["started"] == "yes"):
                 painter.setOpacity(0.6)
                 rect = self.currentMouse["rect"]
@@ -140,85 +154,81 @@ class BoardWidget(QWidget):
                     painter.setOpacity(0.6)
                     for available in self.availableMoves:
                         rect = QRect(boardConfig.legendShort() + (available["x"]-1) * boardConfig.rectSize(), boardConfig.legendShort() + (available["y"]-1) * boardConfig.rectSize(), boardConfig.rectSize(), boardConfig.rectSize()) 
-                        painter.fillRect(rect, boardConfig.brushMouseMove())
-                    
+                        painter.fillRect(rect, boardConfig.brushMouseMove())                  
             else:
                 painter.setOpacity(0.6)
                 rect = self.currentMouse["rect"]
                 painter.fillRect(rect["position"], rect["brush"])
-                print(self.currentMouse["x"])
-                print(self.currentMouse["y"])
 
     def mousePressEvent(self, e):
-        from .globals import check_av_moves1
-        pos = e.pos()
-        x = pos.x()
-        y = pos.y()
-        if e.button() == Qt.LeftButton:
-            if (self.moveStarted["started"] == "yes"):
-                correctRect = False
-                i = 0
-                while i < len(self.availableMoves):
-                    available = self.availableMoves[i]
-                    if (x > boardConfig.legendShort() + (available["x"]-1) * boardConfig.rectSize() and 
-                        x < boardConfig.rectSize() + boardConfig.legendShort() + (available["x"]-1) * boardConfig.rectSize() and 
-                        y > boardConfig.legendShort() + (available["y"]-1) * boardConfig.rectSize() and 
-                        y < boardConfig.rectSize() + boardConfig.legendShort() + (available["y"]-1) * boardConfig.rectSize() ):
-                        correctRect = True
-                        break
-                    i += 1
-                
-                if (correctRect):
-                    self.moveDone = True
-                    self.availableMoves[i]["chosen"] = True
-                    self.moveStarted = {
-                        "started": "no"
-                    }
-                    self.rightPressedPosition = e.pos()
-                    self.update()
-            else:
-                for column in self.boardView:
-                    for row in column:
-                        if (x > boardConfig.legendShort() + (row["x"]-1) * boardConfig.rectSize() and 
-                            x < boardConfig.rectSize() + boardConfig.legendShort() + (row["x"]-1) * boardConfig.rectSize() and 
-                            y > boardConfig.legendShort() + (row["y"]-1) * boardConfig.rectSize() and 
-                            y < boardConfig.rectSize() + boardConfig.legendShort() + (row["y"]-1) * boardConfig.rectSize() and
-                            row["x"] > 0 and 
-                            row["y"] > 0 and 
-                            row["iconContainer"] != None 
-                            and row["iconContainer"]["value"].getName() != "nothing"):
-                                self.moveDone = False
-                                self.availableMoves = [ 
-                                    { "x": 5, "y": 4, "chosen": False },
-                                    { "x": 3, "y": 4, "chosen": False },
-                                    { "x": 7, "y": 3, "chosen": False },
-                                    { "x": 6, "y": 7, "chosen": False },
-                                    { "x": 2, "y": 6, "chosen": False }
-                                ]
-                                self.moveStarted = {
-                                    "started": "yes"
-                                }
-
-                                check_av_moves1((row["y"]-1,row["x"]-1))
-                                self.update()
-                                break
-        elif e.button() == Qt.RightButton:
-            self.moveStarted = {
-                "started": "no"
-            }
-            self.rightPressedPosition = e.pos()
-            self.update()
+        if (self.is_turn):
+            from .globals import check_av_moves1, move1
+            pos = e.pos()
+            x = pos.x()
+            y = pos.y()
+            if e.button() == Qt.LeftButton:
+                if (self.moveStarted["started"] == "yes"):
+                    correctRect = False
+                    i = 0
+                    while i < len(self.availableMoves):
+                        available = self.availableMoves[i]
+                        if (x > boardConfig.legendShort() + (available["x"]-1) * boardConfig.rectSize() and 
+                            x < boardConfig.rectSize() + boardConfig.legendShort() + (available["x"]-1) * boardConfig.rectSize() and 
+                            y > boardConfig.legendShort() + (available["y"]-1) * boardConfig.rectSize() and 
+                            y < boardConfig.rectSize() + boardConfig.legendShort() + (available["y"]-1) * boardConfig.rectSize() ):
+                            correctRect = True
+                            break
+                        i += 1
+                    
+                    if (correctRect):
+                        move1((self.availableMoves[i]["y"] - 1, self.availableMoves[i]["x"] - 1))
+                        #self.moveDone = True
+                        self.availableMoves[i]["chosen"] = True
+                        self.moveStarted = {
+                            "started": "no"
+                        }
+                        # self.rightPressedPosition = e.pos()
+                        self.availableMoves = []
+                        self.currentMouse = None
+                        self.display_update.emit()
+                else:
+                    for column in self.boardView:
+                        for row in column:
+                            if (x > boardConfig.legendShort() + (row["x"]-1) * boardConfig.rectSize() and 
+                                x < boardConfig.rectSize() + boardConfig.legendShort() + (row["x"]-1) * boardConfig.rectSize() and 
+                                y > boardConfig.legendShort() + (row["y"]-1) * boardConfig.rectSize() and 
+                                y < boardConfig.rectSize() + boardConfig.legendShort() + (row["y"]-1) * boardConfig.rectSize() and
+                                row["x"] > 0 and 
+                                row["y"] > 0 and 
+                                row["iconContainer"] != None 
+                                and row["iconContainer"]["value"].getName() != "nothing"):
+                                    if (row["iconContainer"]["value"].getColor() == self.color):
+                                        check_av_moves1((row["y"]-1,row["x"]-1))
+                                        #self.moveDone = False
+                                        self.moveStarted = {
+                                            "started": "yes"
+                                        }
+                                        self.display_update.emit()
+                                        break
+                                    
+            elif e.button() == Qt.RightButton:
+                self.moveStarted = {
+                    "started": "no"
+                }
+                #self.rightPressedPosition = e.pos()
+                self.repaint()
     
     # def leaveEvent(self, event):
     #     self.currentMouse = None
-    #     self.update()
+    #     self.display_update.emit()()
     
     def mouseMoveEvent(self, e):
-        if (self.moveStarted != None and self.moveStarted["started"] == "yes"):
-            return
+        if (self.is_turn):
+            if (self.moveStarted != None and self.moveStarted["started"] == "yes"):
+                return
 
-        pos = e.pos()
-        self.calculateMouseEvent(pos)
+            pos = e.pos()
+            self.calculateMouseEvent(pos)
     
     def calculateMouseEvent(self, pos):
         x = pos.x()
@@ -261,3 +271,21 @@ class BoardWidget(QWidget):
 
     def opponent_turn(self):
         self.is_turn = False
+
+    def available_moves(self, moves):
+        self.availableMoves = []
+        for move in moves:
+            self.availableMoves.append({ "x": move[1] + 1, "y": move[0] + 1, "chosen": False })
+        self.display_update.emit()
+
+    def update_board(self, moves, piece):
+        for move in moves:
+            pieceFrom = move[0]
+            pieceTo = move[1]
+
+            previous = self.boardView[pieceFrom[0] + 1][pieceFrom[1] + 1]
+            previous_value = previous["iconContainer"]["value"]
+            if (previous_value.getName() != "nothing"):
+                self.boardView[pieceTo[0] + 1][pieceTo[1] + 1]["iconContainer"]["value"] = previous_value
+                self.boardView[pieceFrom[0] + 1][pieceFrom[1] + 1]["iconContainer"]["value"] = boardConfig.nothing()
+                self.display_update.emit()
