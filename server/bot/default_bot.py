@@ -80,6 +80,7 @@ class DefaultBot(Player):
                     self.get_av_moves(moves[i][0][0], moves[i][0][1])
                 self.game.move(self, moves[i][1])
                 return
+            s += weights[i]
 
     def send_av_moves(self, moves):
         self.av_moves = moves
