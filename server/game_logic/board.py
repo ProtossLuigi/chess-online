@@ -1,5 +1,5 @@
 import server.game_logic.chess_pieces as cp
-from ..player import Player
+# from ..player import Player
 
 
 class GamePlayer:
@@ -283,4 +283,4 @@ class Game:
         self.move_piece(self.current_piece[0], self.current_piece[1], destination[0], destination[1], caller)
 
     def promote(self, name):
-        pass  # TODO
+        self.promote_pawn(self.current_piece[0] + self.board[self.current_piece[0]][self.current_piece[1]].direction, self.current_piece[1], name)
