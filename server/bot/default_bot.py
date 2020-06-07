@@ -11,8 +11,8 @@ class DefaultBot(Player):
         self.last_piece = None
         self.av_moves = []
 
-    def get_av_moves(self, x, y):
-        self.last_piece = (x, y)
+    def get_av_moves(self, y, x):
+        self.last_piece = (y, x)
         self.game.check_available_moves(self, self.last_piece)
         return self.av_moves
 
@@ -21,28 +21,28 @@ class DefaultBot(Player):
         for y in range(8):
             for x in range(8):
                 if self.board[y][x] * self.color > 0:
-                    moves += [((x, y), dst) for dst in self.get_av_moves(x, y)]
+                    moves += [((y, x), dst) for dst in self.get_av_moves(y, x)]
         return moves
 
     def update_board(self, moves, piece):
         if piece:
             move = moves[0]
             if piece == 'rook':
-                self.board[move[1][1]][move[1][0]] = 2
+                self.board[move[1][0]][move[1][1]] = 2
             elif piece == 'bishop':
-                self.board[move[1][1]][move[1][0]] = 3
+                self.board[move[1][0]][move[1][1]] = 3
             elif piece == 'knight':
-                self.board[move[1][1]][move[1][0]] = 4
+                self.board[move[1][0]][move[1][1]] = 4
             elif piece == 'queen':
-                self.board[move[1][1]][move[1][0]] = 5
-            self.board[move[0][1]][move[0][0]] = 0
+                self.board[move[1][0]][move[1][1]] = 5
+            self.board[move[0][0]][move[0][1]] = 0
         else:
             for move in moves:
-                self.board[move[1][1]][move[1][0]] = self.board[move[0][1]][move[0][0]]
-                self.board[move[0][1]][move[0][0]] = 0
+                self.board[move[1][0]][move[1][1]] = self.board[move[0][0]][move[0][1]]
+                self.board[move[0][0]][move[0][1]] = 0
 
     def start_game(self, color):
-        self.color = {'white': 1, 'black': -1}[color]
+        self.color = {'Bialy': 1, 'Czarny': -1}[color]
         self.board[0][0] = -2
         self.board[0][1] = -4
         self.board[0][2] = -3
@@ -67,16 +67,16 @@ class DefaultBot(Player):
         moves = self.get_all_moves()
         weights = []
         for move in moves:
-            if self.board[move[1][1]][move[1][0]] * self.color < 0:
+            if self.board[move[1][0]][move[1][1]] * self.color < 0:
                 weights.append(0.75)
             else:
                 weights.append(0.25)
         cap = sum(weights)
-        r = uniform(cap)
+        r = uniform(0., cap)
         s = 0.
         for i in range(len(moves)):
             if s <= r < s + weights[i]:
-                if self.last_piece != moves[i][0]:
+                if self.last_piece != (moves[i][0][1], moves[i]):
                     self.get_av_moves(moves[i][0][0], moves[i][0][1])
                 self.game.move(self, moves[i][1])
                 return
@@ -84,5 +84,5 @@ class DefaultBot(Player):
     def send_av_moves(self, moves):
         self.av_moves = moves
 
-    def promote_pawn(self, x, y):
+    def promote_pawn(self, y, x):
         self.game.promote('queen')
