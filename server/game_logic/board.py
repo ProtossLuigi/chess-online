@@ -1,5 +1,5 @@
 import server.game_logic.chess_pieces as cp
-from ..player import Player
+# from ..player import Player
 
 
 class GamePlayer:
@@ -134,6 +134,7 @@ class Game:
             if self.board[x][y].direction == -1 and dest_x == 0 or self.board[x][y].direction == 1 and dest_x == 7:
                 self.set_field(dest_x, dest_y, self.board[x][y])
                 self.set_field(x, y, None)
+                self.current_piece = (dest_x, dest_y)
                 self.player.promote_pawn(dest_x, dest_y)
                 return
         elif isinstance(self.board[x][y], cp.King):
@@ -283,4 +284,4 @@ class Game:
         self.move_piece(self.current_piece[0], self.current_piece[1], destination[0], destination[1], caller)
 
     def promote(self, name):
-        pass  # TODO
+        self.promote_pawn(self.current_piece[0], self.current_piece[1], name)
