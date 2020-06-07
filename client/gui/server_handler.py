@@ -1,4 +1,7 @@
 
+def queue_start():
+    from .globals import queueWindowShow
+    queueWindowShow()
 
 def game_start(color):
     from .globals import gameWindowShow
@@ -42,6 +45,5 @@ def check():
 
 
 def promote_pawn(x, y):
-    pass  # TODO
-
-
+    from .globals import promote_pawn1
+    promote_pawn1(x, y)

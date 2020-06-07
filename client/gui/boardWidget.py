@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from PyQt5.QtWidgets import QWidget, QGraphicsScene
+from PyQt5.QtWidgets import QWidget, QGraphicsScene, QVBoxLayout, QPushButton
 from PyQt5.QtGui import QPalette, QColor, QPainter, QPen, QBrush, QPixmap, QCursor
 from PyQt5.QtCore import QRect, Qt, QPoint
 from PyQt5 import QtCore
@@ -11,7 +11,7 @@ import threading
 
 class BoardWidget(QWidget):
 
-    def dupa(self):
+    def window_update(self):
         self.repaint()
 
     display_update = QtCore.pyqtSignal()
@@ -32,7 +32,7 @@ class BoardWidget(QWidget):
         self.setMouseTracking(True)
         self.rightPressedPosition = None
         self.availableMoves = []
-        self.display_update.connect(self.dupa)
+        self.display_update.connect(self.window_update)
 
     def createBoard(self):
         width, height = boardConfig.boardSize()
@@ -289,3 +289,13 @@ class BoardWidget(QWidget):
                 self.boardView[pieceTo[0] + 1][pieceTo[1] + 1]["iconContainer"]["value"] = previous_value
                 self.boardView[pieceFrom[0] + 1][pieceFrom[1] + 1]["iconContainer"]["value"] = boardConfig.nothing()
                 self.display_update.emit()
+
+    def promote_pawn(self, x, y):
+        print("sdddd")
+        pass
+    
+    # def show_promote_dialog(self):
+    #     self.choosePawn = ChoosePawn()
+    #     self.choosePawn.show()
+
+    

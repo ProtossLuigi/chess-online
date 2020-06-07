@@ -198,6 +198,7 @@ class Game:
         self.opponent.opponent_turn()
 
     def promote_pawn(self, x, y, piece_name):
+        print("new pawn")
         new_moves = [[(x - self.board[x][y].direction, y), (x, y)]]
         self.current_player.pieces.remove(self.board[x][y])
         self.set_field(x, y, None)
