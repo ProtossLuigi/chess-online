@@ -24,9 +24,9 @@ def softmax_cross_entropy_with_logits(y_true, y_pred):
 
 
 class GenModel:
-    def __init__(self, reg_const, learning_rate, input_dim, output_dim):
-        self.reg_const = reg_const
-        self.learning_rate = learning_rate
+    def __init__(self, input_dim, output_dim):
+        self.reg_const = config.REG_CONST
+        self.learning_rate = config.LEARNING_RATE
         self.input_dim = input_dim
         self.output_dim = output_dim
 
@@ -47,10 +47,10 @@ class GenModel:
 
 
 class ResidualCNN(GenModel):
-    def __init__(self, reg_const, learning_rate, input_dim, output_dim, hidden_layers):
-        super().__init__(reg_const, learning_rate, input_dim, output_dim)
-        self.hidden_layers = hidden_layers
-        self.num_layers = len(hidden_layers)
+    def __init__(self, input_dim, output_dim):
+        super().__init__(input_dim, output_dim)
+        self.hidden_layers = config.HIDDEN_CNN_LAYERS
+        self.num_layers = len(config.HIDDEN_CNN_LAYERS)
         self.model = self._build_model()
 
     def residual_layer(self, input_block, filters, kernel_size):
