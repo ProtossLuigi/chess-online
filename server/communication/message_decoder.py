@@ -14,3 +14,5 @@ def decode(caller, msg):
             caller.move((message[1], message[2]))
         elif message[0] == 'join':
             join(caller, message[1])
+        elif message[0] == 'promote':
+            caller.promote(message[1])

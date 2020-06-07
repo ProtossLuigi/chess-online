@@ -281,3 +281,6 @@ class Game:
         print(destination[0])
         print(destination[1])
         self.move_piece(self.current_piece[0], self.current_piece[1], destination[0], destination[1], caller)
+
+    def promote(self, name):
+        pass  # TODO

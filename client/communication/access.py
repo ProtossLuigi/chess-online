@@ -35,3 +35,6 @@ def check_av_moves(piece):
 def move(dst):
     send(active_socket, me.move(dst))
 
+
+def promote(name):
+    send(active_socket, me.promote(name))
