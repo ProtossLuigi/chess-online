@@ -2,7 +2,7 @@ import threading
 from queue import Queue
 from random import shuffle
 
-from server.bot.learning_bot import TrainedBot
+from server.bot.default_bot import DefaultBot
 from server.game_logic.board import Game
 
 
@@ -14,7 +14,7 @@ class Lobby:
 def join(player, bot):
     Lobby.lobby_lock.acquire()
     if bot:
-        players = [TrainedBot(), player]
+        players = [DefaultBot(), player]
         shuffle(players)
         Game(players[0], players[1])
     elif Lobby.waitroom.empty():
