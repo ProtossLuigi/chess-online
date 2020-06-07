@@ -59,6 +59,19 @@ class GameWindow(QMainWindow):
         self.turnLabel.setFont(QFont('Arial', 14))
         columnLayout.addWidget(self.turnLabel)
 
+        self.queen = QPushButton("&queen", self)
+        self.queen.clicked.connect(self.queen1)
+        columnLayout.addWidget(self.queen)
+        self.rook = QPushButton("&rook", self)
+        self.rook.clicked.connect(self.rook1)
+        columnLayout.addWidget(self.rook)
+        self.bishop = QPushButton("&bishop", self)
+        self.bishop.clicked.connect(self.bishop1)
+        columnLayout.addWidget(self.bishop)
+        self.knight = QPushButton("&knight", self)
+        self.knight.clicked.connect(self.knight1)
+        columnLayout.addWidget(self.knight)
+        
         widgetColumn = QWidget()
         widgetColumn.setLayout(columnLayout)
         widgetColumn.setStyleSheet("background-color:lightGray;")
@@ -105,4 +118,25 @@ class GameWindow(QMainWindow):
         self.boardWidget.update_board(moves, piece)
 
     def promote_pawn(self, x, y):
-        self.boardWidget.promote_pawn(x, y)
+        print("duu")
+
+    def queen1(self):
+        from .globals import promote1
+        print("asokdasodk")
+        promote1("queen")
+        self.boardWidget.promote_pawn(0, 0)
+
+    def rook1(self):
+        from .globals import promote1
+        promote1("rook")
+        self.boardWidget.promote_pawn(0, 0)
+
+    def bishop1(self):
+        from .globals import promote1
+        promote1("bishop")
+        self.boardWidget.promote_pawn(0, 0)
+
+    def knight1(self):
+        from .globals import promote1
+        promote1("knight")
+        self.boardWidget.promote_pawn(0, 0)

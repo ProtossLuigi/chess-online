@@ -2,7 +2,7 @@
 
 from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QHBoxLayout, QPushButton, QLineEdit
 
-from .globals import initialization, connect1, join1, listen1
+from .globals import initialization, connect1, listen1
 
 class StartWindow(QWidget):
     def __init__(self, parent=None):
@@ -39,7 +39,6 @@ class StartWindow(QWidget):
         try:
             connect1('169.254.200.100', 52926)
             listen1()
-            join1(False)
             initialization()
         except Exception as exception:
             print(f"StartWindow exception: {exception}")

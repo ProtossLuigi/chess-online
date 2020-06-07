@@ -9,48 +9,6 @@ from .boardConfig import BoardConfig as boardConfig
 
 import threading
 
-class ChoosePawn(QWidget):
-    def __init__(self):
-        super(ChoosePawn, self).__init__()
-
-        columnLayout = QVBoxLayout()
-        self.queen = QPushButton("&queen", self)
-        self.queen.clicked.connect(self.queen1)
-        self.rook = QPushButton("&rook", self)
-        self.rook.clicked.connect(self.rook1)
-        self.bishop = QPushButton("&bishop", self)
-        self.bishop.clicked.connect(self.bishop1)
-        self.knight = QPushButton("&knight", self)
-        self.knight.clicked.connect(self.knight1)
-        
-        columnLayout.addWidget(self.queen)
-        columnLayout.addWidget(self.rook)
-        columnLayout.addWidget(self.bishop)
-        columnLayout.addWidget(self.knight)
-        self.setLayout(columnLayout)
-        self.setGeometry(700, 400, 240, 240)
-        self.setWindowTitle("Wybierz nową figurę")
-
-    def queen1(self):
-        from .globals import promote1
-        self.queen.close()
-        promote1("queen")
-
-    def rook1(self):
-        from .globals import promote1
-        self.rook.close()
-        promote1("rook")
-
-    def bishop1(self):
-        from .globals import promote1
-        self.bishop.close()
-        promote1("bishop")
-
-    def knight1(self):
-        from .globals import promote1
-        self.knight.close()
-        promote1("knight")
-
 class BoardWidget(QWidget):
 
     def window_update(self):
@@ -333,7 +291,11 @@ class BoardWidget(QWidget):
                 self.display_update.emit()
 
     def promote_pawn(self, x, y):
-        self.choosePawn = ChoosePawn()
-        self.choosePawn.show()
+        print("sdddd")
+        pass
+    
+    # def show_promote_dialog(self):
+    #     self.choosePawn = ChoosePawn()
+    #     self.choosePawn.show()
 
     

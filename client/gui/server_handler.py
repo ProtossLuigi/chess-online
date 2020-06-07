@@ -1,4 +1,7 @@
 
+def queue_start():
+    from .globals import queueWindowShow
+    queueWindowShow()
 
 def game_start(color):
     from .globals import gameWindowShow

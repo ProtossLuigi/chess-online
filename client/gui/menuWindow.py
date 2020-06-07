@@ -2,8 +2,8 @@
 
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QGridLayout, QPushButton
 
-from .gameWindow import GameWindow
 from .queueWindow import QueueWindow
+from .gameWindow import GameWindow
 
 class MenuWindow(QWidget):
     def __init__(self, parent=None):
@@ -29,12 +29,14 @@ class MenuWindow(QWidget):
         self.show()
 
     def startComputer(self):
-        self.gameWindow = GameWindow()
-        self.gameWindow.show()
+        from .globals import join1
+        join1(True)
 
     def startOnline(self):
-        self.queueWindow = QueueWindow()
-        self.queueWindow.show()
+        from .globals import queueWindowShow
+        from .globals import join1
+        join1(False)
+        queueWindowShow()
 
     def finish(self):
         self.close()
