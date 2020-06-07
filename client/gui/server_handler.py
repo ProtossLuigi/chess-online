@@ -14,7 +14,12 @@ def opponent_turn():
     opponent_turn1()
 
 def available_squares(squares):
-    print(squares)
+    from .globals import available_squares1
+    available_squares1(squares)
+
+def update_board(moves, piece):
+    from .globals import update_board1
+    update_board1(moves, piece)
 
 def victory():
     pass  # TODO
@@ -40,5 +45,3 @@ def promote_pawn(x, y):
     pass  # TODO
 
 
-def update_board(moves, piece):
-    pass  # TODO

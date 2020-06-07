@@ -37,7 +37,7 @@ class StartWindow(QWidget):
     
     def start(self):
         try:
-            connect1('127.0.1.1', 50757)
+            connect1('127.0.1.1', 57045)
             listen1()
             join1(False)
             initialization()

@@ -26,14 +26,14 @@ class BoardConfig():
 
     def startBoard():
         return [
-            [ Rook("black"), Knight("black"), Bishop("black"), Queen("black"), King("black"), Bishop("black"), Knight("black"), Rook("black") ],
-            [ Pawn("black"), Pawn("black"), Pawn("black"), Pawn("black"), Pawn("black"), Pawn("black"), Pawn("black"), Pawn("black") ],
+            [ Rook("Czarny"), Knight("Czarny"), Bishop("Czarny"), Queen("Czarny"), King("Czarny"), Bishop("Czarny"), Knight("Czarny"), Rook("Czarny") ],
+            [ Pawn("Czarny"), Pawn("Czarny"), Pawn("Czarny"), Pawn("Czarny"), Pawn("Czarny"), Pawn("Czarny"), Pawn("Czarny"), Pawn("Czarny") ],
             [ Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing("") ],
             [ Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing("") ],
             [ Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing("") ],
             [ Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing(""), Nothing("") ],
-            [ Pawn("white"), Pawn("white"), Pawn("white"), Pawn("white"), Pawn("white"), Pawn("white"), Pawn("white"), Pawn("white") ],
-            [ Rook("white"), Knight("white"), Bishop("white"), Queen("white"), King("white"), Bishop("white"), Knight("white"), Rook("white") ]
+            [ Pawn("Bialy"), Pawn("Bialy"), Pawn("Bialy"), Pawn("Bialy"), Pawn("Bialy"), Pawn("Bialy"), Pawn("Bialy"), Pawn("Bialy") ],
+            [ Rook("Bialy"), Knight("Bialy"), Bishop("Bialy"), Queen("Bialy"), King("Bialy"), Bishop("Bialy"), Knight("Bialy"), Rook("Bialy") ]
         ]
 
     def rectSize():
@@ -55,17 +55,18 @@ class BoardConfig():
         return Nothing("")
 
 class Type:
-    def __init__(self, name, color, iconWhite, iconBlack, left, top):
-        if (color == "white"):
-            self.icon = QPixmap(iconWhite)
-        elif (color == "black"):
-            self.icon = QPixmap(iconBlack)
+    def __init__(self, name, color, iconBialy, iconCzarny, left, top):
+        if (color == "Bialy"):
+            self.icon = QPixmap(iconBialy)
+        elif (color == "Czarny"):
+            self.icon = QPixmap(iconCzarny)
         else:
             self.icon = None
 
         self.name = name
         self.top = top
         self.left = left
+        self.color = color
         
     def getIcon(self):
         return self.icon
@@ -75,6 +76,9 @@ class Type:
 
     def marginLeft(self):
         return self.left
+
+    def getColor(self):
+        return self.color
 
     def getName(self):
         return self.name

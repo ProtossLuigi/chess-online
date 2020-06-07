@@ -34,3 +34,4 @@ def check_av_moves(piece):
 
 def move(dst):
     send(active_socket, me.move(dst))
+
