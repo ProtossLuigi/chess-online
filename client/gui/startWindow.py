@@ -37,11 +37,7 @@ class StartWindow(QWidget):
     
     def start(self):
         try:
-<<<<<<< HEAD
             connect1('169.254.200.100', 52926)
-=======
-            connect1('127.0.1.1', 51843)
->>>>>>> designnext5
             listen1()
             join1(False)
             initialization()

@@ -100,3 +100,9 @@ class GameWindow(QMainWindow):
 
     def update_board(self, moves, piece):
         self.boardWidget.update_board(moves, piece)
+
+    def update_board(self, moves, piece):
+        self.boardWidget.update_board(moves, piece)
+
+    def promote_pawn(self, x, y):
+        self.boardWidget.promote_pawn(x, y)

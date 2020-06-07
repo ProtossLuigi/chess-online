@@ -5,7 +5,7 @@ import threading
 from .queueWindow import QueueWindow
 from .gameWindow import GameWindow
 
-from ..communication.access import connect, join, listen, check_av_moves, move
+from ..communication.access import connect, join, listen, check_av_moves, move, promote
 
 def connect1(server, port):
     connect(server, port)
@@ -29,6 +29,7 @@ def gameWindowShow(color):
     global gameWindow
     gameWindow = GameWindow(color)
     gameWindow.show()
+    queueWindow.close()
 
 def your_turn1():
     gameWindow.your_turn()
@@ -42,6 +43,9 @@ def available_squares1(moves):
 def update_board1(moves, piece):
     gameWindow.update_board(moves, piece)
 
+def promote_pawn1(x, y):
+    gameWindow.promote_pawn(x, y)
+
 ######
 
 def check_av_moves1(piece):
@@ -49,3 +53,6 @@ def check_av_moves1(piece):
 
 def move1(dst):
     move(dst)
+
+def promote1(name):
+    promote(name)
